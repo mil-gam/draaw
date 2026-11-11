@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>디지털 드로우 & 융합 시뮬레이터</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div class="wrap">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Digimon Masters</div>
+          <h1>뽑기 & 융합 시뮬레이터</h1>
+          <p>확률표 기반 독립 시행 시뮬레이션</p>
+        </div>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="다크모드 전환">
+          <span id="themeIcon">☾</span>
+          <span id="themeText">눈 보호 모드</span>
+        </button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-mode="draw">디지털 드로우</button>
+        <button class="tab" data-mode="fusion">융합</button>
+      </div>
+      <div class="layout">
+        <aside class="card">
+          <div class="control">
+            <label id="tableLabel">드로우 종류</label>
+            <select id="table" class="select"></select>
+          </div>
+          <div class="control">
+            <label>시행 횟수</label>
+            <input id="count" type="number" min="1" max="100000" value="1">
+          </div>
+          <div class="buttons">
+            <button class="btn primary" id="run">시뮬레이션</button>
+            <button class="btn" id="clear">초기화</button>
+          </div>
+          <div class="notice" id="rule"></div>
+          <div class="section-title">현재 확률표</div>
+          <div class="hint" id="tableInfo"></div>
+          <div id="fusionCalc" class="fusion-calc" style="display:none">
+            <div class="section-title">융합 천장 / 비용 계산</div>
+            <div class="calc-grid">
+              <div><label>현재 스택</label><input id="fusionStack" type="number" min="0" max="9" value="5"></div>
+              <div><label>보유 SSS+ 재료</label><input id="fusionMat" type="number" min="0" value="1"></div>
+              <div><label>SSS+ 1개 가격 (T)</label><input id="fusionItemPrice" type="number" min="1" value="200"></div>
+              <div><label>1T 현금가 (원)</label><input id="fusionTPrice" type="number" min="1" value="78"></div>
+            </div>
+            <div class="calc-result" id="fusionCalcResult"></div>
+            <div class="calc-note">융합 1회는 SSS+ 4개를 소모하며, U가 아니면 SSS+ 1개를 획득해 재사용한다고 계산합니다. 10스택 달성 시 U 1개를 추가 지급합니다.</div>
+          </div>
+        </aside>
+        <main>
+          <div class="stats">
+            <div class="stat"><span>전체 결과</span><b id="total">0</b></div>
+            <div class="stat"><span>U</span><b id="u">0</b></div>
+            <div class="stat"><span>SSS+</span><b id="sssp">0</b></div>
+            <div class="stat"><span>SSS</span><b id="sss">0</b></div>
+            <div class="stat"><span>SS+</span><b id="ssp">0</b></div>
+          </div>
+          <div class="card">
+            <div class="result-head">
+              <h2>획득 결과</h2>
+              <div style="display:flex;align-items:center;gap:8px">
+                <label id="autoRevealWrap" style="display:none;margin:0;display:flex;align-items:center;gap:5px;cursor:pointer">
+                  <input id="autoReveal" type="checkbox" style="width:auto;margin:0"> 한번에 오픈
+                </label>
+                <button id="revealAll" class="reveal-btn" style="display:none">전체 공개</button>
+                <span class="hint" id="runInfo">아직 시행하지 않았습니다.</span>
+              </div>
+            </div>
+            <div id="results" class="result-list">
+              <div class="empty">왼쪽에서 시행 횟수를 정하고 시뮬레이션을 실행하세요.</div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:16px">
+            <div class="section-title" style="margin-top:0">등급별 개수</div>
+            <div id="gradeGrid" class="grade-grid"></div>
+            <div class="section-title">아이템별 누적 개수</div>
+            <div id="itemCounts" class="item-counts"></div>
+          </div>
+        </main>
+      </div>
+      <div class="footer">확률은 제공된 표를 그대로 사용합니다. 디지털 드로우는 티켓 1장당 6회, 융합은 1회당 1개 결과입니다.</div>
+    </div>
+  </div>
+
+  <!-- 데이터와 로직 스크립트 연결 -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
